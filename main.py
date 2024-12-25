@@ -12,7 +12,6 @@ from sklearn.preprocessing import LabelBinarizer
 #**Task 1: Acquire the data**
 
 ## Importing train and test datasets
-
 !wget --no-check-certificate 'https://drive.google.com/uc?export=download&id=1fsV5NEUmOOR6RrYVHI4m7_LwOBsjB_Sy' -O sign_mnist_train.csv
 !wget --no-check-certificate 'https://drive.google.com/uc?export=download&id=1qgDI_D9sabYT07K35ORoYU3qVGsKpNvs' -O sign_mnist_test.csv
 
@@ -1463,7 +1462,3 @@ plt.ylabel('Accuracy (%)')
 plt.legend()
 plt.grid(True)
 plt.show()
-
-
-
-To know whether the model is overfit, look at decreasing accuracy of the test set. For CNN, we see from the plot that overfitting begins after 35-40 epochs.
