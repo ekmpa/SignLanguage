@@ -1,7 +1,4 @@
-#Sarah Ameur 261048999
-#Emma Kondrup 261108802
-#Fadi Younes 261001877
-#Assignment 3, Group 42
+#Emma Kondrup, Sarah Ameur and Fadi Younes
 
 import pandas as pd
 import numpy as np
