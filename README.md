@@ -64,6 +64,27 @@ Starting with a baseline model without hidden layers, we followed it with models
 #### Experimenting with activation function
 Comparing Sigmoid and Leaky ReLU, we found the model with Leaky ReLU activation fonction has slightly better accuracies than the one with ReLU. 
 
+The model with Sigmoid activation fonction has worst accuracies accross the board compared to the one with ReLU; see below. 
+
+<img width="296" alt="Screenshot 2024-12-29 at 9 17 19 AM" src="https://github.com/user-attachments/assets/1196e599-b437-4726-b5df-d73e06dbf36f" />
+
+The MLP with Sigmoid activation function is worst than the ReLU and Leaky ReLU MLPs, which is expected as ReLU is generally accepted as being better for neural networks. This is because the gradients of the Sigmoid function can become very small for larger values far from 0 that are either positive or negative, as the slope of the Sigmoid function gets smaller. The gradients may thus become too small for effective learning. The problem is worse in networks with multiple layers such as this one with two hidden layers, where gradients from the output layer have to propagate back to previous layers. ReLU and Leaky ReLU solve this issue by having the gradients large and stable even far from 0. 
+
+The model with Leaky ReLU activation fonction may have slightly better accuracies than the one with ReLU because when inputs to a ReLU neuron are negative it leads to an output of 0. If a neuron always outputs 0, it stops contributing to the learning since the gradient through it will be 0. This potentially limits the model’s capacity to learn some complicated patterns. Leaky ReLU solves this by having a small gradient when the neuron is negative, allowing the network to learn more patterns during training. This could explain the better accuracy, as the network is less likely to ignore subtle parts of the data.
+
+#### Experimenting with L2 regularization
+Adding L2 regularization with a tuned regularization parameter λ to MLP slowed down the convergence rate of backpropagation, and 50 training epochs were insufficient to achieve satisfactory train and test accuracy. With L2 regularization, the train accuracy of MLP with Leaky ReLU activation decreases by 7.9%, and the test accuracy decreases by 28.6%. Similarly, the train accuracy of MLP with Sigmoid activation decreases by 54.3%, and the test accuracy decreases by 36.0%. These results are summarized in the table below. The regularization parameter λ for MLP is determined iteratively to approach the maximal test accuracy with a precision of 0.00005.
+<img width="610" alt="Screenshot 2024-12-29 at 9 18 29 AM" src="https://github.com/user-attachments/assets/d0a8d6e0-9ab9-4609-89de-a9775f0b8fd5" />
+
+Changing the output activation from Leaky ReLU to Softmax or Sigmoid to Softmax yields a training accuracy of approximately 97% and a test accuracy of around 68%, comparable to the MLP models without L2 regularization after 50 epochs. This highlights the impact of the output activation choice on the performance of backpropagation. Sigmoid seems like a bad choice of activation in the hidden layers.
+
+#### Experimenting with a CNN
+A convolutional neural network (CNN) with 3 convolutional layers and 2 fully connected layers was constructed using PyTorch’s nn.Module with ReLU as the default activation. Preliminary experiments indicated that the CNN’s performance plateaued after 4 training epochs, leading to the decision to fix the number of epochs at 4 for computational efficiency. To maintain efficiency, the stride length and padding were set to 1 pixel. The gradient of the cross entropy loss was minimized using PyTorch’s Adam optimizer with learning rate lr=0.001. The batch size was fixed to 64. The kernel size and number of kernels per convolutional layer were first tuned for fixed numbers of units per hidden layer. For all num hidden units ∈ 32, 64, 128, 256, using 32 kernels of size 5×5 produced the highest test accuracy. Then, the number of units per hidden layer was varied while keeping num kernels = 32 and kernel size = 5 fixed. Table 2 below compares the accuracy of CNN and MLP under these variations.
+
+<img width="604" alt="Screenshot 2024-12-29 at 9 19 39 AM" src="https://github.com/user-attachments/assets/c7201080-58ee-41ab-a063-735fd85bdc60" />
+
+
+
 
 
 ## References
