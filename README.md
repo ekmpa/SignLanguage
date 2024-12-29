@@ -74,6 +74,7 @@ The model with Leaky ReLU activation fonction may have slightly better accuracie
 
 #### Experimenting with L2 regularization
 Adding L2 regularization with a tuned regularization parameter λ to MLP slowed down the convergence rate of backpropagation, and 50 training epochs were insufficient to achieve satisfactory train and test accuracy. With L2 regularization, the train accuracy of MLP with Leaky ReLU activation decreases by 7.9%, and the test accuracy decreases by 28.6%. Similarly, the train accuracy of MLP with Sigmoid activation decreases by 54.3%, and the test accuracy decreases by 36.0%. These results are summarized in the table below. The regularization parameter λ for MLP is determined iteratively to approach the maximal test accuracy with a precision of 0.00005.
+
 <img width="610" alt="Screenshot 2024-12-29 at 9 18 29 AM" src="https://github.com/user-attachments/assets/d0a8d6e0-9ab9-4609-89de-a9775f0b8fd5" />
 
 Changing the output activation from Leaky ReLU to Softmax or Sigmoid to Softmax yields a training accuracy of approximately 97% and a test accuracy of around 68%, comparable to the MLP models without L2 regularization after 50 epochs. This highlights the impact of the output activation choice on the performance of backpropagation. Sigmoid seems like a bad choice of activation in the hidden layers.
@@ -102,6 +103,7 @@ but test and validation accuracy remains small compared to the training accuracy
 <img width="604" alt="Screenshot 2024-12-29 at 10 36 24 AM" src="https://github.com/user-attachments/assets/ab5b1b51-56f1-4d76-9820-798a968318bc" />
 
 As further evidence, the figure below shows another non-optimal CNN model. At around 50-100 epochs, the training and validation accuracy curves start to exhibit a notable gap, as can be seen between the green and red, purple and brown, and pink and gray curves.
+
 <img width="591" alt="Screenshot 2024-12-29 at 10 36 38 AM" src="https://github.com/user-attachments/assets/9916f44a-ac8b-4fc4-a209-ceac718ffd2b" />
 
 ## Discussion
@@ -115,12 +117,12 @@ The main takeaway from the CNN experiment is its consistent outperformance of ML
 #### Optimal MLP Architecture
 Without regularization, experiments revealed that Multinomial Logistic regression outperformed any MLP with at least one layer. This suggests that Leaky ReLU is not a preferred activation choice. When regularization was included, both Tanh activation and ReLU performed roughly the same and 10% better than Leaky ReLU. Our best guess for why ReLU outperforms Leaky ReLU is that ReLU is sparser than Leaky ReLU, which effectively segregates features more strongly based on their importance.
 
-Moreover, despite saturating at extreme input values like Sigmoid, Tanh surprisingly performed on par with the commonly preferred ReLU. We attribute this to the steeper gradient around 0 in Tanh compared to Sigmoid, allowing backpropagation to converge faster. Thus, 200 epochs were largely sufficient for Tanh to catch up with ReLU. Therefore, it seems that the consistent under- performance of Sigmoid is due to a combination of saturating gradients and the slow convergence of its gradient descent.
+Moreover, despite saturating at extreme input values like Sigmoid, Tanh surprisingly performed on par with the commonly preferred ReLU. We attribute this to the steeper gradient around 0 in Tanh compared to Sigmoid, allowing backpropagation to converge faster. Thus, 200 epochs were largely sufficient for Tanh to catch up with ReLU. Therefore, it seems that the consistent underperformance of Sigmoid is due to a combination of saturating gradients and the slow convergence of its gradient descent.
 
 In comparison to CNN, MLP was more prone to overfitting, required 50 times more epochs, and its validation accuracy capped around 70%, whereas CNN could attain roughly 90% validation accuracy, making it more generalizable. We believe that MLP’s performance could have been greatly increased by using more than 2 hidden layers, as CNN additionally benefited from 3 convolutional layers during which it could extract important pattern features. This would be an interesting avenue to explore in the future.
 
 #### Accuracy as a function of epochs
-Plotting the train and test accuracy of the tuned MLP and CNN models confirmed earlier obser- vations that CNN requires fewer training epochs than MLP, in addition to maintaining good test and validation scores. MLP, on the other hand, tends to overfit quickly, and test accuracy caps at roughly 70%.
+Plotting the train and test accuracy of the tuned MLP and CNN models confirmed earlier observations that CNN requires fewer training epochs than MLP, in addition to maintaining good test and validation scores. MLP, on the other hand, tends to overfit quickly, and test accuracy caps at roughly 70%.
 
 ## Statement of Contributions
 Emma Kondrup implemented the MLP model, analysed the data, and performed hyperparameter tuning. Fadi Younes contributed to obtaining and pre-processing the data, as well as adding hidden layers. Sarah Ameur contributed to the tuning, experimenting with different activation functions, and comparing results with the CNN. Sarah, Emma and Fadi wrote every section of this report and reviewed the work of all team members.
