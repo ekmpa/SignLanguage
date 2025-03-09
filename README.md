@@ -1,4 +1,5 @@
 # SLT (Sign Language Translator)
+| _Emma Kondrup, Sarah Ameur, Fadi Younes_
 A sign language translator which uses a multi-layer perceptron (compared with a convolutional neural network) to translate a sign image into the corresponding letter. 
 
 ## Summary
